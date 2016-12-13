@@ -1,0 +1,13 @@
+/target/
+/.settings/
+/bin/
+/.classpath
+/.project
+/.pydevproject
+/.pydevproject.bak
+.classpath
+.project
+.pydevproject
+.pydevproject.bak
+/.metadata/
+/.recommenders/

@@ -1,0 +1,21 @@
+who:焦润，梁家诚，刘银，罗金宏
+
+When:2016-04-22 21:00
+
+What:策略和web
+How long:1.5
+
+Arrived solution:
+1、大盘界面
+2、雷达图：活跃图（turnover）、价格（adjprice）、成交量（volume）
+PE、PB
+3、全加detail matr、volum、kdj
+
+
+分工：
+焦润：负责策略
+
+刘银：P图
+梁家诚：负责界面框架，及各种界面
+
+罗金宏：实现web框架

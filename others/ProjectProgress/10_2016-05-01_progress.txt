@@ -1,0 +1,23 @@
+who:罗金宏
+when:第十周
+what:给项目打包
+problems:很多bug
+todo:找 bug
+
+who:梁家诚
+when:第十周
+what:绘图
+problems:不好看
+todo:优化绘图
+
+who:刘银
+when:第十周
+what:放弃学新语言，写文档
+problems:计划赶不上变化
+todo:好好计划
+
+who:焦润
+when:第十周
+what:学习算法
+problems:计算方法需要优化
+todo:优化方法

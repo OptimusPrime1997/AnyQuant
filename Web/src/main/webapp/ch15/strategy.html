@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>strategy</title>
+
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/funcs.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+
+</head>
+
+<script>
+	function getMoneyDate(){
+        return [
+        '2013/5/23',
+        '2013/5/24',
+        '2013/5/27',
+        '2013/5/28',
+        '2013/5/29',
+        '2013/6/1',
+        '2013/6/2',
+        '2013/6/3'
+        ];
+    }
+    function getMoney(){
+        return [1000,2000,1500,1800,1300,2100,2500,1800];
+    } 
+</script>
+
+<style>
+	td{
+        vertical-align: top;
+    }
+</style>
+
+<body>
+	<div id="nav">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Flying Dutchman</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">自选</a></li>
+                    <li class="active"><a href="#">大盘</a></li>
+                    <li><a href="#">个股</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            行业<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" id="navDropDown">
+                            <li><a href="#">详细</a></li>
+                            <li><a href="#">比较</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="search">
+                <form class="form-inline" role="form">
+                    <input type="text" class="form-control" id="searchText">
+                    <button class="btn btn-default btn-sm" id='searchButton' onclick="movePointer()">
+                        <span class="glyphicon glyphicon-search"></span> 搜索</button>
+                </form>                   
+            </div>
+        </nav>
+    </div>
+
+    <div id="strategy">
+        <div id = "up1" style = "height: 80px; width: 66%;"></div>
+        <div id = "up2" style = "width:66%;">
+            <div id = "up2_in1" style="float:left;height: 220px;width:200px">
+                <form class="form-inline" role="form">
+                    <label>股票编号</label>
+                    <input type="text" class="form-control">
+                </form>
+            </div>
+            <div id = "up2_in2" style = "float:left; height: 220px; width: 66%">
+                <table id = "in2">
+                    <tr id = "1">
+                            <td><label for="x11">初始金额</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x12">
+                                <br>
+                            </td>
+                            
+                            <td>
+                            <label for="x11" style="margin-left :50px">初始数量</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x13">
+                                <br>
+                            </td>
+                    </tr>
+
+                     <tr id = "2">
+                            <td><label for="x11">上涨(%)</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x22">
+                                <br>
+                            </td>
+                            <td><label for="x11" style="margin-left :50px">买入</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x23">
+                                <br>
+                            </td>
+                    </tr>
+
+                     <tr id = "3">
+                            <td><label for="x11">下降(%)</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x32">
+                                <br>
+                            </td>
+                            <td><label for="x11" style="margin-left :50px">卖出</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x33">
+                                <br>
+                            </td>
+                    </tr>
+
+                     <tr id = "4">
+                            <td><label for="x11">测试天数</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x42">
+                                <br>
+                            </td>
+                            <td><label for="x11" style="margin-left :50px">截止日期</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x43">
+                                <br>
+                            </td>
+                    </tr>
+
+                     <tr id = "5">
+                            <td><label for="x11">上界</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x52">
+                                <br>
+                            </td>
+                            <td><label for="x11" style="margin-left :50px">下界</label>
+                                <br>
+                            </td>
+                            <td><input type="text" class="form-control" id="x53">
+                                <br>
+                            </td>
+                            <td>
+                            <button class="btn btn-default btn-sm" id="submit" style="margin-left: 50px;width: 80px">G O</button> 
+                            </td>
+                    </tr>
+                </table>
+            </div>                       
+        </div>
+        <div id = "up3" style="width:66%">
+             <div id = "up3_in1" style="float:left;margin-left: 25px">
+                 <div class="chart" id="simulate" style="height:250px;top: 20px;">
+                    <script type="text/javascript">
+                        var myChart = echarts.init(document.getElementById('simulate'));
+                        option = {
+                            title:{
+                                text:'资产总额变化'
+                            },
+                            tooltip:{
+                                trigger:'axis'
+                            },
+                            dataZoom : {
+                                show : true,
+                                realtime: true,
+                                start : 0,
+                                end : 100
+                            },
+                        
+                            toolbox:{
+                                show:true,
+                                feature:{
+                                    mark:{show:true,readOnly:false},
+                                    magicType : {show: true, type: ['line', 'bar']},
+                                    restore : {show: true},
+                                    saveAsImage : {show: true}
+                                }
+                            },
+                            calculable:true,
+                            xAxis:[
+                                {
+                                    type:'category',
+                                    boundaryGap:false,
+                                    data:getMoneyDate()
+                                }
+                            ],
+
+                            yAxis:[
+                                {
+                                    type:'value',
+                                    splitArea : {show : true},
+                                    axisLabel:{
+                                        formatter:'{value}$'
+                                    }
+                                }
+                            ],
+
+                            series:[
+                            {
+                                name:'money',
+                                type:'line',
+                                data:getMoney(),
+                                markPoint:{
+                                    data:[
+                                    {type:'max',name:'max money'},
+                                    {type:'min',name:'min money'}
+                                    ]
+                                },
+
+                                markLine:{
+                                    data:[
+                                        {type:'average',name:'average money'}
+                                    ]
+                                },
+                                
+                            }
+                            ]
+                            
+                        }
+                        myChart.setOption(option);
+                    </script>
+                 </div>
+                 
+                 <div class="chart" id="comp1" style="height: 200px;margin-top: 20px">
+                 <script type="text/javascript">
+	                 var chart_comp1 = echarts.init(document.getElementById('comp1'));
+	                 option_comp1={
+	                		 title:{
+	                			 text:'和大盘比较'
+	                		 },
+	                		 tooltip: {
+	                		        trigger: 'axis',
+	                		        axisPointer: {
+	                		            type: 'shadow'
+	                		        }
+	                		 },
+	                		 xAxis: {
+	                		        type: 'value',
+	                		        boundaryGap: [0, 0.01]
+	                		 },
+	                		 yAxis: {
+	                			 type:'category',
+	                			 data: ['大盘','本股']
+	                		 },
+	                		 series:[
+	                		         {	
+	                		        	 name:'money',
+	                		        	 type:'bar',
+	                		        	 data:[100,50]
+	                		         }
+	                 		 ]		
+	                 	}
+	                 chart_comp1.setOption(option_comp1);
+                 </script>
+                 </div>
+             </div>                
+        </div>
+    </div>
+</body>
+</html>

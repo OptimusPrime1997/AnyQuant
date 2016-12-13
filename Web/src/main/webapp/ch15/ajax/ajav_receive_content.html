@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax</title>
+</head>
+<body>
+	<script language="JavaScript">
+		var xmlHttp;
+		function createXMLHttp() {
+			if (window.XMLHttpRequest) {
+				xmlHttp = new XMLHttpRequest();
+			} else {
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}
+		function showMsg() {
+			createXMLHttp();
+			xmlHttp.open("POST", "content.htm");
+			xmlHttp.onreadystatechange = showMsgCallback;
+			xmlHttp.send(null);
+		}
+		function showMsgCallback() {
+			if (xmlHttp.readyState == 4) {
+				if (xmlHttp.status == 200) {
+					var text = xmlHttp.responseText;
+					document.getElementById("msg").className = "样式表名称";
+					document.getElementById("msg").innerHTML = text;
+				}
+			}
+		}
+	</script>
+	<input type="button" onclick="showMsg()" value="调用Ajax显示内容">
+	<span id="msg"></span>
+</body>
+</html>

@@ -1,0 +1,28 @@
+who:罗金宏
+when:第七周
+what:完成KDJ指标的计算逻辑，修改选择日期的Button的Bug。
+problems:现在项目的点击反应更慢了
+todo: 尝试用Swing的多线程技术优化绘图代码，使反应速度加快。
+通过优化计算数据的算法来加快反应速度。
+
+who:梁家诚
+when:第七周
+what:把逻辑层写好的指标和描述添加到界面
+problems:现在项目的点击反应更慢了（可怕）
+todo: 尝试用Swing的多线程技术优化绘图代码，使反应速度加快。
+通过优化计算数据的算法来加快反应速度。
+
+who:刘银
+when:第七周
+what:发现了javasynth这个神奇的语言
+problems:并不会写
+todo: 学习javasynth。
+
+who:焦润
+when:第七周
+what:计算过程加速。工程思想和数学还真是不一样啊。
+problems:由于前期一些协定没有明确，导致一些问题
+todo: debug
+
+
+

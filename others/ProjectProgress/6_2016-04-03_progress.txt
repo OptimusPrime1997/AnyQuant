@@ -1,0 +1,25 @@
+﻿who:罗金宏
+when:第六周
+what: 添加万年历panel的监听
+problems:点击反应太慢了
+todo:解决反应慢的问题，优化界面布局。
+
+who:梁家诚
+when:第六周
+what: 忘了干啥了，好像也没干啥
+problems:点击反应太慢了（真的慢）
+todo:解决反应慢的问题，优化界面布局。
+
+
+who:刘银
+when:第六周
+what: 学了loolandfeel
+problems:对项目没什么帮助
+todo:找新的语言适合动态换皮肤
+
+who:焦润
+when:第六周
+what：完成指标的计算以及对于界面层的适配
+problems:计算过程重复，只能封装，可是还算感觉好慢啊
+todo:加速
+

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Select</title>
+
+	<link href="css/styles.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
+    <script src="js/funcs.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+</head>
+
+<style>
+	#selectTable{
+		top: 50px;
+	}
+	#thumb{
+		position: relative;
+		top: 20px;
+	}
+</style>
+
+<script>
+	function skipSingle(tr){
+        var temp = document.getElementById(tr);
+        var id = temp.cells[1].innerHTML;
+        SetCookie("single",id);
+        document.location = "single.html";
+    }
+
+    $(document).ready(function() {
+        $('#select').DataTable({
+            bPaginate: true,
+            bLengthChange: false,
+            bProcessing: true
+        });
+    });
+</script>
+
+<body>
+	<div id="nav">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Flying Dutchman</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="select.html">自选</a></li>
+                    <li><a href="market.html">大盘</a></li>
+                    <li><a href="single.html">个股</a></li>
+                    <li><a href="strategy.html">策略</a></li>
+                    <li><a href="factory.html">行业</a></li>
+                </ul>
+            </div>
+            <form class="form-inline" role="form" id="navItems">
+                <input type="text" class="form-control" id="searchText">
+                <button class="btn btn-default btn-sm" id='searchButton'>
+                    <span class="glyphicon glyphicon-search"></span> 搜索</button>
+            </form>                   
+        </nav>
+    </div>
+
+    <div class="JLtable" id="selectTable">
+        <table class="table table-bordered table-hover" id="select">
+           <thead>
+                <tr>
+                    <th>代码</th>
+                    <th>名称</th>
+                    <th>开盘价</th>
+                    <th>收盘价</th>
+                    <th>最高价</th>
+                    <th>最低价</th>
+                    <th>成交量</th>
+                    <th>换手率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="tr1" onmouseover="showCell('tr1')" ondblclick="skipSingle('tr1')">
+                    <td>特尔施特根</td>
+                    <td>sh000002</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr2" onmouseover="showCell('tr2')" ondblclick="skipSingle('tr2')">
+                    <td>内马尔</td>
+                    <td>sh000003</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr3" onmouseover="showCell('tr3')" ondblclick="skipSingle('tr3')">
+                    <td>里奥·梅西</td>
+                    <td>sh000004</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr4" onmouseover="showCell('tr4')" ondblclick="skipSingle('tr4')">
+                    <td>皮克</td>
+                    <td>sh000005</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr5" onmouseover="showCell('tr5')" ondblclick="skipSingle('tr5')">
+                    <td>阿尔巴</td>
+                    <td>sh000006</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr6" onmouseover="showCell('tr6')" ondblclick="skipSingle('tr6')">
+                    <td>阿德里亚诺</td>
+                    <td>sh000007</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr7" onmouseover="showCell('tr7')" ondblclick="skipSingle('tr7')">
+                    <td>苏亚雷斯</td>
+                    <td>sh000008</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr8" onmouseover="showCell('tr8')" ondblclick="skipSingle('tr8')">
+                    <td>拉基蒂奇</td>
+                    <td>sh000009</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr9" onmouseover="showCell('tr9')" ondblclick="skipSingle('tr9')">
+                    <td>布斯克茨</td>
+                    <td>sh000010</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr10" onmouseover="showCell('tr10')" ondblclick="skipSingle('tr10')">
+                    <td>伊涅斯塔</td>
+                    <td>sh000011</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+                <tr id="tr11" onmouseover="showCell('tr11')" ondblclick="skipSingle('tr11')">
+                    <td>伊布</td>
+                    <td>sh000012</td>
+                    <td>11.11</td>
+                    <td>22.22</td>
+                    <td>33.33</td>
+                    <td>44.44</td>
+                    <td>55.55万</td>
+                    <td>66.66</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="introduction">
+        
+        <div id="thumb">
+            <div id="thumbnailHead">
+                <h3 id="thumbnailName"></h3>
+                <h4 id="thumbnailID"></h4>
+            </div>
+            <div id="thumbnail">                    
+            </div>
+        </div>
+    </div>
+</body>
+</html>

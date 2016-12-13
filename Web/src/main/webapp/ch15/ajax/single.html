@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Single</title>
+    
+    <link href="fullPage/examples/examples.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/single.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="fullPage/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="fullPage/examples/examples.js"></script>
+    <script src="js/funcs1.js"></script>
+    <script src="js/single.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+    <script src="circleProgress/js/radialIndicator.js"></script>
+
+</head>
+
+<script>
+    var id = 'sz000014';
+    var hasScore = false;
+    var add = 0;
+
+    function init() {
+        var temp = ReadCookie("single");
+        if (temp!="") {
+            id = temp;
+        };
+        $('#fullpage').fullpage({
+            // sectionsColor: ['#fff', '#fff', '#fff'],
+            anchors: ['firstPage', 'secondPage', '3rdPage', '4thPage', '5thPage', '6thPage'],
+            menu: '#menu',
+            loopTop: true,
+            loopBottom: true,
+
+            'afterLoad': function(anchorLink, index){
+                if(index == 6&&(!hasScore)){
+                    realScore();
+                    hasScore = true;
+                }
+            },
+        });
+    }
+    
+    function getBeforePredict(id){
+        return [4,5,6,7,8]
+    }
+    function getPredict(id){
+        return [
+            [7,8,9],
+            [3,4,5]
+        ]
+    }
+    function predictDate(){
+        return [
+        '2013/5/23',
+        '2013/5/24',
+        '2013/5/27',
+        '2013/5/28',
+        '2013/5/29',
+        '2013/6/1',
+        '2013/6/2',
+        '2013/6/3'
+        ]
+    }
+    
+    $(document).ready(function() {
+        init();
+        setCurrentInfo(id);
+        barPointer();
+
+    });
+</script>
+
+<body>
+    <div id="nav">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Flying Dutchman</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="select.html">自选</a></li>
+                    <li><a href="market.html">大盘</a></li>
+                    <li class="active"><a href="single.html">个股</a></li>
+                    <li><a href="strategy.html">策略</a></li>
+                    <li><a href="factory.html">行业</a></li>
+                </ul>
+            </div>
+            <form class="form-inline" role="form" id="navItems">
+                <button type="button" class="btn btn-default btn-sm" id='addButton' onclick="changeAddPic()">
+                </button>
+                <input type="text" class="form-control" id="searchText">
+                <button type="button" class="btn btn-default btn-sm" id='searchButton'>
+                    <span class="glyphicon glyphicon-search"></span> 搜索</button>
+            </form>                   
+        </nav>
+    </div>
+
+    <ul id="menu">
+        <li data-menuanchor="firstPage" class="active"><a href="#firstPage">K线图</a></li>
+        <li data-menuanchor="secondPage"><a href="#secondPage">VOL折线图</a></li>
+        <li data-menuanchor="3rdPage"><a href="#3rdPage">KDJ折线图</a></li>
+        <li data-menuanchor="4thPage"><a href="#4thPage">ATR折线图</a></li>
+        <li data-menuanchor="5thPage"><a href="#5thPage">股价预测</a></li>
+        <li data-menuanchor="6thPage"><a href="#6thPage">股票打分</a></li>
+     </ul>
+
+    <div id="fullpage">
+        <div class="section" id="section0">
+            <div class="chart" id="MA">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('MA'));
+                    var data0 = getData(id);
+
+                    option = {
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params) {
+                                var res = params[0].name;
+                                res += '<br/>' + params[0].seriesName;
+                                res += '<br/>  开盘 : ' + params[0].value[0] + '  最高 : ' + params[0].value[3];
+                                res += '<br/>  收盘 : ' + params[0].value[1] + '  最低 : ' + params[0].value[2];
+                                return res;
+                            }
+                        },
+                        dataZoom : {
+                            show : true,
+                            realtime: true,
+                            start : 50,
+                            end : 100
+                        },
+                        grid: {
+                            x: 70,
+                            y: 10,
+                            x2:90,
+                            y2:65
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : true,
+                                axisTick: {onGap:false},
+                                splitLine: {show:false},
+                                data : date()
+                            }
+                        ],
+                        yAxis: {
+                            scale: true,
+                            splitArea: {
+                                show: true
+                            }
+                        },           
+                        series: [
+                            {
+                                name: '日K',
+                                type: 'k',
+                                data: data0,
+                                itemStyle:{
+                                    normal:{
+                                        color:upColor,
+                                        color0:downColor,
+                                        borderColor:upColor,
+                                        borderColor0:downColor
+                                    }
+                                }
+                            },
+                            {
+                                name: 'MA5',
+                                type: 'line',
+                                data: calculateMA(data0, 5),
+                                smooth: true,
+                                itemStyle: {
+                                    normal: {color:color5}
+                                }
+                            },
+                            {
+                                name: 'MA10',
+                                type: 'line',
+                                data: calculateMA(data0, 10),
+                                smooth: true,
+                                itemStyle: {
+                                    normal: {color:color10}
+                                }
+                            }
+
+                        ]
+                    };
+
+                    myChart.setOption(option);
+                </script>
+            </div>          
+        </div>
+        <div class="section" id="section1">
+            <div class="chart" id="VOL">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('VOL'));
+                    var data0 = getVOL(id);
+                    option = {
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params) {
+                                var res = params[0].name;
+                                res += '<br/>' + params[0].seriesName;
+                                res += '<br/>' + (params[0].value/1)+'万';
+                                return res;
+                            }
+                        },
+                        dataZoom : {
+                            show : true,
+                            realtime: true,
+                            start : 50,
+                            end : 100
+                        },
+                        grid: {
+                            x: 70,
+                            y: 10,
+                            x2:90,
+                            y2:65
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : true,
+                                axisTick: {onGap:false},
+                                splitLine: {show:false},
+                                data : date()
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                scale:true,
+                                splitNumber: 5,
+                                boundaryGap: [0.05, 0.05],
+                                axisLabel: {
+                                    formatter: function (v) {
+                                        return Math.round(v/1) + ' 万'
+                                    }
+                                },
+                                splitArea : {show : true}
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'VOL',
+                                type:'bar',
+                                data:data0
+                            },
+                            {
+                                name:'VOL5',
+                                type:'line',
+                                data: calculateVOL(data0, 5),
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color5}
+                                }
+                            },
+                            {
+                                name:'VOL10',
+                                type:'line',
+                                data: calculateVOL(data0, 10),
+                                smooth: true,
+                                itemStyle: {
+                                    normal: {color:color10}
+                                }
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+        <div class="section" id="section2">
+            <div class="chart" id="KDJ">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('KDJ'));
+                    var dataK = getK(id);
+                    var dataD = getD(id);
+                    var dataJ = getJ(id);
+                    option = {
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params) {
+                                var res = params[0].name;
+                                res += '<br/>' + params[0].seriesName;
+                                res += '<br/>' + params[0].value;
+                                return res;
+                            }
+
+                        },
+                        dataZoom : {
+                            show : true,
+                            realtime: true,
+                            start : 50,
+                            end : 100
+                        },
+                        grid: {
+                            x: 70,
+                            y: 10,
+                            x2:90,
+                            y2:65
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                position:'bottom',
+                                boundaryGap : true,
+                                axisTick: {onGap:false},
+                                splitLine: {show:false},
+                                data : date()
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                scale:true,
+                                boundaryGap: [0.05, 0.05],
+                                splitArea : {show : true}
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'K',
+                                type:'line',
+                                data:dataK,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color5}
+                                }                               
+                            },
+                            {
+                                name:'D',
+                                type:'line',
+                                data:dataD,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color10}
+                                }                                 
+                            },
+                            {
+                                name:'J',
+                                type:'line',
+                                data:dataJ,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color20}
+                                }                                
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+        <div class="section" id="section3">
+            <div class="chart" id="ATR">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('ATR'));
+                    var data0 = getATR(id);
+                    option = {
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params) {
+                                var res = params[0].name;
+                                res += '<br/>' + params[0].seriesName;
+                                res += '<br/>' + params[0].value;
+                                return res;
+                            }
+                        },
+                        dataZoom : {
+                            show : true,
+                            realtime: true,
+                            start : 50,
+                            end : 100
+                        },
+                        grid: {
+                            x: 70,
+                            y: 10,
+                            x2:90,
+                            y2:65
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                position:'bottom',
+                                boundaryGap : true,
+                                axisTick: {onGap:false},
+                                splitLine: {show:false},
+                                data : date()
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                scale:true,
+                                boundaryGap: [0.05, 0.05],
+                                splitArea : {show : true}
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'ATR',
+                                type:'line',
+                                data:data0,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color5}
+                                }                                      
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+        <div class="section" id="section4">
+            <div class="chart" id="predict">
+                <script type="text/javascript">
+                    var myChart = echarts.init(document.getElementById('predict'));
+                    var date0 = predictDate();
+                    var data1 = getBeforePredict(id);
+                    var data02 = getPredict(id)[0];
+                    var data03 = getPredict(id)[1];
+                    var data2 = ['-','-','-','-','-'];
+                    var data3 = ['-','-','-','-','-'];
+                    for (var i = 0; i < 3; i++) {
+                        data2.push(data02[i]);
+                        data3.push(data03[i]);
+                    };
+                    option = {
+                        tooltip : {
+                            trigger: 'axis',
+                            formatter: function (params) {
+                                if (params[0].name<=date0[4]) {
+                                    var res = params[2].name;
+                                    res += '<br/>' + params[2].seriesName;
+                                    res += ' ' + params[2].value;
+                                    return res;
+                                };
+                                if (params[0].name>=date0[5]) {
+                                    var res = params[0].name;
+                                    res += '<br/>' + params[0].seriesName;
+                                    res += ' ' + params[0].value;
+                                    res += '<br/>' + params[1].seriesName;
+                                    res += ' ' + params[1].value;
+                                    return res;
+                                };
+                            }
+                        },
+                        grid: {
+                            x: 70,
+                            y: 10,
+                            x2:90,
+                            y2:65
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                position:'bottom',
+                                boundaryGap : true,
+                                axisTick: {onGap:false},
+                                splitLine: {show:false},
+                                data : date0
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                scale:true,
+                                boundaryGap: [0.05, 0.05],
+                                splitArea : {show : true}
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'预测最高价',
+                                type:'line',
+                                data:data2,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color10}
+                                }                                      
+                            },
+                            {
+                                name:'预测最低价',
+                                type:'line',
+                                data:data3,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color20}
+                                }                                      
+                            },
+                            {
+                                name:'股票价格',
+                                type:'line',
+                                data:data1,
+                                smooth: true,                                      
+                                itemStyle: {
+                                    normal: {color:color5}
+                                }                                      
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                </script>
+            </div>
+        </div>
+        <div class="section" id="section5">
+            <div id="score">
+            </div>
+            <div class="comment" id="scoreComment">暴雪娱乐在早年就被收购，经过多次转手后被整体并入雪乐山在线（后更名为雪乐山娱乐），而雪乐山的背后就是维旺迪集团。维旺迪在2004年重组旗下的游戏业务，成立子公司维旺迪游戏，维旺迪游戏由雪乐山和暴雪娱乐等多个部门组成。</div>
+            <div id="bar">
+            </div>
+            <div class="comment" id="barComment">随着动视与维旺迪游戏的合并，维旺迪游戏旗下的雪乐山和暴雪娱乐等部门被整体合并入动视公司。但是，这对暴雪娱乐的整体运行并没有太大的影响。因为对暴雪来说，它只是又换了一个东家而已，只不过这次的新东家是业界著名的美国游戏发行商巨头动视公司。</div>
+        </div>
+    </div>
+
+    <div id="introduction">
+        <div id="current">
+            <h3 id="stockName"></h3>
+            <h4 id="stockID"></h4>
+            <div id="stockContent">
+                <p id="openPriceLabel"></p>
+                <p id="openPrice"></p>
+                <p id="closePriceLabel"></p>
+                <p id="closePrice"></p>
+                <p id="highestPriceLabel"></p>
+                <p id="highestPrice"></p>
+                <p id="lowestPriceLabel"></p>
+                <p id="lowestPrice"></p>
+                <p id="volLabel"></p>
+                <p id="vol"></p>
+                <p id="ADJLabel"></p>
+                <p id="ADJ"></p>
+                <p id="turnOverLabel"></p>
+                <p id="turnOver"></p>
+                <p id="PE"></p>
+                <p id="PB"></p>
+            </div>                 
+        </div>
+        <div id="info">
+            <div id="businessScope">
+                <h3>经营范围</h3>
+                <p>魔兽争霸最早是在1994年发布的，其制作公司就是大名鼎鼎的暴雪，相信大家还记的暗黑破坏神和星际争霸吧，他们都是暴雪给我们带来的无限激情。94年的最初版本英文名称是：Warcraft。从这时开始，暴雪（Blizzard）这个名字第一次出现于游戏包装盒上。之前暴雪也以"Silicon & Synapse"、"Chaos"等名称开发过一些电视游戏平台上的游戏，影响有限</p>
+            </div>
+            <div id="address">
+                <h3>总部地址</h3>
+                <p>《魔兽争霸》与暴雪公司早些时候发行的游戏《星际争霸》一样，是一款成功的即时战略游戏。游戏包含了大多数即时战略游戏所具备的要素：采集资源，建设基地和指挥战斗。</p>
+            </div>
+            <div id="moneyFlow">
+                <h3>资金流向</h3>
+                <p>此外，游戏中四个种族的某些设定也能从《星际争霸》中找到类似的影子，如：暗夜精灵族就像《星际争霸》中的Terran一样可以移动自己的基地。</p>
+            </div>
+        </div>
+        
+    </div>
+    
+
+</body>
+
+</html>

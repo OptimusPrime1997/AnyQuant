@@ -1,0 +1,23 @@
+who:罗金宏
+when:第一周
+what:配置好了gitlab环境， 搭建了项目
+problems: 项目需求还不明确
+todo:完成项目文档的书写
+
+who:刘银
+when:第一周
+what:配置好了gitlab环境，加入了项目
+problems:项目需求未知
+todo：明确项目需求，完成文档书写
+
+who:梁家诚
+when:第一周
+what:配置好了gitlab环境，加入了项目
+problems:项目需求未知
+todo：明确项目需求，完成文档书写
+
+who:焦润
+when:第一周
+what：配置环境，加入项目
+problems：the same as the other menbers
+todo: 完成需求及文档

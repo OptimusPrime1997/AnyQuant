@@ -1,0 +1,21 @@
+who:焦润，梁家诚，刘银，罗金宏
+
+When:2016-04-29 21:00
+
+What:web项目
+How long:1.5
+
+Arrived solution:
+1、大盘界面
+2、雷达图：活跃图（turnover）、价格（adjprice）、成交量（volume）
+PE、PB
+3、加行业比较
+
+
+分工：
+焦润：负责策略
+
+刘银：实现登录界面
+梁家诚：负责界面框架
+
+罗金宏：实现web框架

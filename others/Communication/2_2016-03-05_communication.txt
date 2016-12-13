@@ -1,0 +1,6 @@
+Who:焦润，梁家诚，刘银，罗金宏
+When:2016-03-05 10:00
+What:代码分工
+How long:2h
+Arrived solution:采用分层模式，分工（界面：梁家诚，刘银；逻辑：焦润；数据：罗金宏）
+                 采用windowbuilder工具开发界面。
