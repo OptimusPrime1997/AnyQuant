@@ -11,21 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Request;
 
 import data.DataFactory;
-import dataservice.DataFactoryDataService;
-import dataservice.StockDataService;
 import dataservice.UserDataService;
-import model.Stock;
 import model.User;
-import utility.MyDate;
 import utility.exception.NotFoundName_exception;
 
 public class CheckServlet extends HttpServlet {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -35,19 +30,19 @@ public class CheckServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String userId = request.getParameter("userName");
-		String userPsd=request.getParameter("userPsd");
-		
-		UserDataService userDataService=DataFactory.getInstance().getUserData();
+		String userPsd = request.getParameter("userPsd");
+
+		UserDataService userDataService = DataFactory.getInstance().getUserData();
 		try {
-			User user=userDataService.getUser(userId);
-			
-			if(user!=null){
-				if(user.getPassword().equals(userPsd)){
+			User user = userDataService.getUser(userId);
+
+			if (user != null) {
+				if (user.getPassword().equals(userPsd)) {
 					out.println("true");
-				}else{
+				} else {
 					out.println("false");
 				}
-			}else{
+			} else {
 				out.println("false");
 			}
 		} catch (NotFoundName_exception e) {

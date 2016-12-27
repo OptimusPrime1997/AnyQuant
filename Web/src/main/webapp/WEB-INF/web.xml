@@ -7,9 +7,7 @@
 
 	<display-name>Welcome to Tomcat</display-name>
 
-	<description>
-     Welcome to Tomcat
-  </description>
+	<description>Welcome to Tomcat</description>
 	<resource-ref>
 		<description>DB Connection</description>
 		<res-ref-name>jdbc/stock</res-ref-name>
@@ -111,33 +109,33 @@
 		<url-pattern>/CheckStockIdServlet</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 400错误 请求无效 -->
+	<!--&lt;!&ndash; 400错误 请求无效 &ndash;&gt;
 	 <error-page>
 		<error-code>400</error-code>
-		<location>/error.jsp</location>
+		<location>error.jsp</location>
 	</error-page>
-	<!-- 404 页面不存在错误 -->
+	&lt;!&ndash; 404 页面不存在错误 &ndash;&gt;
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error.jsp</location>
+		<location>error.jsp</location>
 	</error-page>
-	<!-- 500 服务器内部错误 -->
+	&lt;!&ndash; 500 服务器内部错误 &ndash;&gt;
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error.jsp</location>
+		<location>error.jsp</location>
 	</error-page>
-	<!-- java.lang.Exception异常错误,依据这个标记可定义多个类似错误提示 -->
+	&lt;!&ndash; java.lang.Exception异常错误,依据这个标记可定义多个类似错误提示 &ndash;&gt;
 	 <error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/error.jsp</location>
+		<location>error.jsp</location>
 	</error-page>
-	<!-- java.lang.NullPointerException异常错误,依据这个标记可定义多个类似错误提示 -->
+	&lt;!&ndash; java.lang.NullPointerException异常错误,依据这个标记可定义多个类似错误提示 &ndash;&gt;
 	<error-page>
 		<exception-type>java.lang.NullPointerException</exception-type>
-		<location>/error.jsp</location>
+		<location>error.jsp</location>
 	</error-page>
 	<error-page>
 		<exception-type>javax.servlet.ServletException</exception-type>
-		<location>/error.jsp</location>
-	</error-page> 
+		<location>error.jsp</location>
+	</error-page> -->
 </web-app>

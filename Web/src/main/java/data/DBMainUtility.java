@@ -15,8 +15,9 @@ import utility.Constants;
 public class DBMainUtility {
 
 	public static Connection getConn() {
-		Connection conn = null;
-		try {
+		Connection conn = DBUtility.getConn();
+		return conn;
+		/*try {
 			Class.forName(Constants.DRIVER);
 		} catch (ClassNotFoundException e) {
 			System.out.println("load database driver failed!");
@@ -29,7 +30,7 @@ public class DBMainUtility {
 			System.out.println("Connect database failed!");
 			e.printStackTrace();
 		}
-		return conn;
+		return conn;*/
 	}
 
 	public static PreparedStatement getPreSt(Connection conn, String sql) {

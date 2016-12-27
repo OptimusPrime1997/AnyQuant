@@ -13,7 +13,7 @@ import utility.Constants;
  */
 public class DBUtility {
 	public static Connection getConn() {
-		/*Connection conn = null;
+		Connection conn = null;
 		Context context;
 		try {
 			context = new InitialContext();
@@ -23,9 +23,9 @@ public class DBUtility {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return conn;*/
+		return conn;
 		
-		Connection conn = null;
+		/*Connection conn = null;
 		try {
 			Class.forName(Constants.DRIVER);
 		} catch (ClassNotFoundException e) {
@@ -39,7 +39,7 @@ public class DBUtility {
 			System.out.println("Connect database failed!");
 			e.printStackTrace();
 		}
-		return conn;
+		return conn;*/
 	}
 
 	public static PreparedStatement getPreSt(Connection conn, String sql) {

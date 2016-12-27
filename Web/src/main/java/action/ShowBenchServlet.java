@@ -91,7 +91,9 @@ public class ShowBenchServlet extends HttpServlet {
 				}
 			}
 			doubleStock.add(stockList);
+			System.out.println("doubleStock size:" +doubleStock.size());
 			req.setAttribute("doubleStock", doubleStock);
+			System.out.println("allStock size:" +allStock.size());
 			req.setAttribute("allStock", allStock);
 
 			// test1GetDataByID(stockDataService);
@@ -126,13 +128,16 @@ public class ShowBenchServlet extends HttpServlet {
 					dbIndustryMoney.add(tempIndustry);
 				}
 			}
+			System.out.println("dbIndustryMoney"+dbIndustryMoney.size());
+
 			req.setAttribute("dbIndustryMoney",dbIndustryMoney);
 			ArrayList<ChartVO> chartVOs = stockDataService.getCharVOs(nowDate, Constants.tableSql);
+			System.out.println("chartVOs size:"+chartVOs.size());
 			req.setAttribute("chartVOs", chartVOs);
 
 			// RadarHelper radarHelper = new RadarHelper();
 			ArrayList<ChartVO> trueChartVOs = stockDataService.getCharVOs(nowDate, Constants.radarSql);
-			System.out.println(trueChartVOs.get(0).toString());
+			System.out.println("trueChartVOs size:"+trueChartVOs.size());
 			req.setAttribute("trueChartVOs", trueChartVOs);
 			
 			

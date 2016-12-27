@@ -6,12 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
 
-import data.DataFactory;
-import dataservice.UserDataService;
-import model.User;
-import utility.exception.NotFoundName_exception;
 
 
 public class LoginServlet extends HttpServlet{

@@ -31,3 +31,5 @@ Web/.project
 Web/target/
 Web/bin/
 Web/.jshintsrc
+Web/.idea/
+Web/AnyQuantWeb.iml
